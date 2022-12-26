@@ -37,12 +37,12 @@ if __name__ == '__main__':
             if len(res1):
                 yans.append(key)
             else:
-                print(key+"无货")
+                print(key + "无货")
     if len(yans):
         msg = "烟草：有货"
         for i in yans:
-            msg = msg+"    地址:"+i
-        send_dingding(msg)
+            msg = msg + "    地址:" + i
+        send_dingding(msg, isall=True)
     else:
         c_time = time.strftime("%H:%M:%S", time.localtime())  # 将本地时间转换为字符串，并格式化为 时：分：秒
         if c_time[3:5] == '00':

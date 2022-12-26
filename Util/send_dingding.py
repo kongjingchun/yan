@@ -10,9 +10,10 @@ import time
 import requests
 
 
-def send_dingding(message):
+def send_dingding(message, isall=False):
     """
     发送钉钉消息
+    :param isall: 是否@所有人
     :param message: 消息内容
     :return: 无
     """
@@ -31,7 +32,7 @@ def send_dingding(message):
             "atMobiles": [
                 "wh949wl",  # 机器人发送信息@的用户
             ],
-            "isAtAll": False  # 是否@所有人
+            "isAtAll": isall  # 是否@所有人
         }
     }
 
