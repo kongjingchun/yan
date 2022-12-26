@@ -2,6 +2,8 @@
 # @Create time: 2022/12/1 7:57 下午
 # @Author: KongJingchun
 # @remark:
+import time
+
 import chardet as chardet
 from lxml import etree
 from bs4 import BeautifulSoup
@@ -42,4 +44,6 @@ if __name__ == '__main__':
             msg = msg+"    地址:"+i
         send_dingding(msg)
     else:
-        send_dingding("烟草：无货")
+        c_time = time.strftime("%H:%M:%S", time.localtime())  # 将本地时间转换为字符串，并格式化为 时：分：秒
+        if c_time[3:5] == '00':
+            send_dingding("烟草：无货")
