@@ -35,8 +35,7 @@ if __name__ == '__main__':
             if len(res1):
                 yans.append(key)
             else:
-                pass
-                # send_dingding("烟草：无货")
+                print(key+"无货")
     if len(yans):
         msg = "烟草：有货"
         for i in yans:
