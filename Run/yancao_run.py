@@ -9,14 +9,38 @@ from bs4 import BeautifulSoup
 from BaseRequest.base_request import request
 from Util.send_dingding import send_dingding
 
+yan_list = {
+    "https://www.smokingpipes.com/pipe-tobacco/esoterica/": ["1994", "2018", "2015", "2014", "2198", "2194", "2024",
+                                                             "2193", "2019", "2199", "2201", "1996", "2017", "2021",
+                                                             "1995", "2026", "2195", "2197", "2016", "2023", "2022",
+                                                             "215752", "2196", "1997", "2025", "2200"],
+    "https://www.smokingpipes.com/pipe-tobacco/fribourg-treyer/": ["284"],
+    "https://www.smokingpipes.com/pipe-tobacco/gawith-hoggarth/": ["6044"],
+    "https://www.smokingpipes.com/pipe-tobacco/germain/": ["215753", "215757", "2417", "215754", "215755", "2007",
+                                                           "2012", "2418", "2416", "2011", "2010", "2419", "2013",
+                                                           "2009"],
+    "https://www.smokingpipes.com/pipe-tobacco/gawith-hoggarth/bulk/": ["8579", "4011", "8578"],
+    # "https://www.smokingpipes.com/pipe-tobacco/ashton/":["16413"]
+}
+
 if __name__ == '__main__':
-    url = "https://www.smokingpipes.com/pipe-tobacco/ashton/"
-    html = request.run_main(method='get', url=url).text
-    soup = BeautifulSoup(html, 'lxml')
-    res = str(soup.select('div[data-productID="16412"]'))
-    # res = str(soup.select('div[data-productID="16409"]'))
-    res1 = BeautifulSoup(res, 'lxml').select('span[class="base-price"]')
-    if len(res1):
-        send_dingding("烟草：有货")
+    yans = []
+    for key, values in yan_list.items():
+        html = request.run_main(method='get', url=key).text
+        for value in values:
+            soup = BeautifulSoup(html, 'lxml')
+            res = str(soup.select('div[data-productID="' + value + '"]'))
+            res1 = BeautifulSoup(res, ''
+                                      'lxml').select('span[class="base-price"]')
+            if len(res1):
+                yans.append(key)
+            else:
+                pass
+                # send_dingding("烟草：无货")
+    if len(yans):
+        msg = "烟草：有货"
+        for i in yans:
+            msg = msg+"    地址:"+i
+        send_dingding(msg)
     else:
         send_dingding("烟草：无货")
